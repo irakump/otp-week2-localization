@@ -70,8 +70,8 @@ public class CalculatorController {
                 return;
             }
 
-            double totalFuel = (consumption / 100.0) * distance;
-            double totalCost = totalFuel * price;
+            double totalFuel = calculateFuel(distance, consumption);
+            double totalCost = calculateCost(totalFuel, price);
 
             String result = String.format(
                     localizedStrings.getOrDefault("result.label",
@@ -127,5 +127,13 @@ public class CalculatorController {
             txtConsumption.setStyle(alignment);
             txtPrice.setStyle(alignment);
         });
+    }
+
+    public double calculateFuel(double distance, double consumption) {
+        return (consumption / 100.0) * distance;
+    }
+
+    public double calculateCost(double fuel, double price) {
+        return fuel * price;
     }
 }
