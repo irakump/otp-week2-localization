@@ -7,4 +7,4 @@ COPY src ./src
 
 RUN mvn package
 
-CMD ["java", "-jar", "target/Calculator.jar"]
+CMD ["java", "-jar", "target/org.example.CalculatorApp.jar"]
