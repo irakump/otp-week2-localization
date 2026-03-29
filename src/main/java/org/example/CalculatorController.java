@@ -25,6 +25,7 @@ public class CalculatorController {
     @FXML private Button btnCalculate;
     @FXML private Button btnEN, btnFR, btnJP, btnIR;
     @FXML private Label lblResult;
+    @FXML private Label lblCost;
 
     private Locale currentLocale = new Locale("en", "US");
     private Map<String, String> localizedStrings;
@@ -35,9 +36,18 @@ public class CalculatorController {
         setLanguage(currentLocale);
 
         // Clear result when any input changes
-        txtDistance.textProperty().addListener((obs, oldVal, newVal) -> lblResult.setText(""));
-        txtConsumption.textProperty().addListener((obs, oldVal, newVal) -> lblResult.setText(""));
-        txtPrice.textProperty().addListener((obs, oldVal, newVal) -> lblResult.setText(""));
+        txtDistance.textProperty().addListener((obs, oldVal, newVal) -> {
+            lblResult.setText("");
+            lblCost.setText("");
+        });
+        txtConsumption.textProperty().addListener((obs, oldVal, newVal) -> {
+            lblResult.setText("");
+            lblCost.setText("");
+        });
+        txtPrice.textProperty().addListener((obs, oldVal, newVal) -> {
+            lblResult.setText("");
+            lblCost.setText("");
+        });
     }
 
     /** Language button handlers **/
@@ -56,6 +66,7 @@ public class CalculatorController {
 
             if (distance <= 0 || consumption <= 0 || price <= 0) {
                 lblResult.setText(localizedStrings.getOrDefault("invalid.input", "Invalid input"));
+                lblCost.setText("");
                 return;
             }
 
@@ -64,13 +75,21 @@ public class CalculatorController {
 
             String result = String.format(
                     localizedStrings.getOrDefault("result.label",
-                            "Total fuel needed: %.2f L | Total cost: %.2f"),
-                    totalFuel, totalCost
+                            "Total fuel needed: %.2f L"),
+                    totalFuel
             );
+
+            String costResult = String.format(
+                    localizedStrings.getOrDefault("cost.label", "Total cost: %.2f"),
+                    totalCost
+            );
+
             lblResult.setText(result);
+            lblCost.setText(costResult);
 
         } catch (NumberFormatException ex) {
             lblResult.setText(localizedStrings.getOrDefault("invalid.input", "Invalid input"));
+            lblCost.setText("");
         }
     }
 
@@ -78,6 +97,7 @@ public class CalculatorController {
     private void setLanguage(Locale locale) {
         currentLocale = locale;
         lblResult.setText("");
+        lblCost.setText("");
 
         // Load localized strings
         localizedStrings = LocalizationService.getLocalizedStrings(locale);
@@ -95,7 +115,7 @@ public class CalculatorController {
 
     /** Apply text direction for RTL languages **/
     private void applyTextDirection(Locale locale) {
-        boolean isRTL = locale.getLanguage().equals("fa") || locale.getLanguage().equals("ar");
+        boolean isRTL = locale.getLanguage().equals("fa");
 
         Platform.runLater(() -> {
             if (rootVBox != null) {

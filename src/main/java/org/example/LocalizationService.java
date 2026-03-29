@@ -16,7 +16,7 @@ public class LocalizationService {
         try {
             // Load ResourceBundle from root of resources
             ResourceBundle bundle = ResourceBundle.getBundle(
-                    "MessageBundle", // base name matches file: MessageBundle_xx_YY.properties
+                    "MessageBundle",
                     locale
             );
 
@@ -43,7 +43,8 @@ public class LocalizationService {
                 strings.put("consumption.label", "Fuel Consumption (L/100 km)");
                 strings.put("price.label", "Fuel Price (per liter)");
                 strings.put("calculate.button", "Calculate");
-                strings.put("result.label", "Total fuel needed: {0} L | Total cost: {1}");
+                strings.put("result.label", "Total fuel needed: %.2f L");
+                strings.put("result.cost", "Total cost: %.2f");
                 strings.put("invalid.input", "Invalid input");
             }
         }

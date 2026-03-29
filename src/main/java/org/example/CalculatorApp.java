@@ -19,7 +19,7 @@ public class CalculatorApp extends Application {
         VBox root = loader.load();
 
         // Create scene first
-        Scene scene = new Scene(root, 500, 350);
+        Scene scene = new Scene(root, 500, 360);
 
         // Then add CSS
         scene.getStylesheets().add(getClass().getResource("/org/example/style.css").toExternalForm());
