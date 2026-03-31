@@ -4,8 +4,8 @@ import java.sql.*;
 public class CalculationService {
 
     private static final String DB_NAME = "fuel_calculator_localization";
-    private static final String DB_USER = "test";
-    private static final String DB_PASSWORD = "Test12";
+    private static final String DB_USER = System.getenv("DB_USER");
+    private static final String DB_PASSWORD = System.getenv("DB_PASSWORD");
 
     // Load MariaDB driver
     static {

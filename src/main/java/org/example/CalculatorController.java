@@ -87,6 +87,9 @@ public class CalculatorController {
             lblResult.setText(result);
             lblCost.setText(costResult);
 
+            // Save results
+            CalculationService.saveCalculation(distance, consumption, price, totalFuel, totalCost, currentLocale.getLanguage());
+
         } catch (NumberFormatException ex) {
             lblResult.setText(localizedStrings.getOrDefault("invalid.input", "Invalid input"));
             lblCost.setText("");
@@ -100,7 +103,7 @@ public class CalculatorController {
         lblCost.setText("");
 
         // Load localized strings
-        localizedStrings = LocalizationServiceOld.getLocalizedStrings(locale);
+        localizedStrings = LocalizationService.loadStrings(locale);
 
         // Update UI text
         lblTitle.setText(localizedStrings.getOrDefault("title", "Fuel & Trip Cost Calculator"));

@@ -1,54 +1,86 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.sql.*;
+import java.util.*;
 
 public class LocalizationService {
 
-    /**
-     * Get localized strings for a specific locale
-     */
-    public static Map<String, String> getLocalizedStrings(Locale locale) {
+    public static Map<String, String> loadStrings(Locale locale) {
         Map<String, String> strings = new HashMap<>();
+        String lang = locale.getLanguage();
 
-        try {
-            // Load ResourceBundle from root of resources
-            ResourceBundle bundle = ResourceBundle.getBundle(
-                    "MessageBundle",
-                    locale
-            );
+        try (Connection conn = DatabaseConnection.getConnection()) {
 
-            for (String key : bundle.keySet()) {
-                strings.put(key, bundle.getString(key));
-            }
+            String query = "SELECT `key`, value FROM localization_strings WHERE language = ?";
 
-        } catch (Exception e) {
-            System.err.println("Failed to load resource bundle for locale: " + locale);
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, lang);
+                ResultSet rs = stmt.executeQuery();
 
-            // fallback to English
-            try {
-                ResourceBundle fallback = ResourceBundle.getBundle(
-                        "MessageBundle",
-                        new Locale("en", "US")
-                );
-                for (String key : fallback.keySet()) {
-                    strings.put(key, fallback.getString(key));
+                while (rs.next()) {
+                    strings.put(rs.getString("key"), rs.getString("value"));
                 }
-            } catch (Exception ex) {
-                // Last resort: hardcoded defaults
-                strings.put("title", "Fuel & Trip Cost Calculator");
-                strings.put("distance.label", "Distance (km)");
-                strings.put("consumption.label", "Fuel Consumption (L/100 km)");
-                strings.put("price.label", "Fuel Price (per liter)");
-                strings.put("calculate.button", "Calculate");
-                strings.put("result.label", "Total fuel needed: %.2f L");
-                strings.put("result.cost", "Total cost: %.2f");
-                strings.put("invalid.input", "Invalid input");
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return strings;
     }
+
+    public static String getString(String key, Locale locale) {
+        String value = "";
+        String lang = locale.getLanguage();
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+
+            String query = "SELECT value FROM localization_strings WHERE `key` = ? AND language = ?";
+
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, key);
+                stmt.setString(2, lang);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        value = rs.getString("value");
+                    }
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+     return value;
+
+    }
+
+    public static ArrayList<String> getAllKeys(Locale locale) {
+        ArrayList<String> keys = new ArrayList<>();
+        String lang = locale.getLanguage();
+
+        String query = "SELECT `key` FROM localization_strings WHERE language = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, lang);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    keys.add(rs.getString("key"));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return keys;
+    }
+
 }
