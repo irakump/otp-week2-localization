@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:11
+    container_name: calculator-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      # Make sure your 3307 port is available
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  app:
+    #IMPORTANT docker build -t yourname/sum-product-fx .
+    # docker push yourname/sum-product-fx: last
+    # then you can change the image in the following statement
+    image: irakump/otp-week2-localization:latest
+    container_name: fuel-calculator-app
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DISPLAY: host.docker.internal:0
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+#    network_mode: bridge # it cancels network of docker -> docker cannot find host db.
+volumes:
+  db_data:
+
+#  Then execute docker compose up --build
