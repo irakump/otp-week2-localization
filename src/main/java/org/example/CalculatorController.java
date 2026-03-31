@@ -100,7 +100,7 @@ public class CalculatorController {
         lblCost.setText("");
 
         // Load localized strings
-        localizedStrings = LocalizationService.getLocalizedStrings(locale);
+        localizedStrings = LocalizationServiceOld.getLocalizedStrings(locale);
 
         // Update UI text
         lblTitle.setText(localizedStrings.getOrDefault("title", "Fuel & Trip Cost Calculator"));
