@@ -23,7 +23,11 @@ public class CalculationService {
     }
 
     private static String getDatabaseUrl() {
-        return "jdbc:mariadb://" + getDatabaseHost() + ":3307/" + DB_NAME +
+        String host = System.getenv("DB_HOST");
+        String port = System.getenv("DB_PORT");
+        if (host == null || host.isEmpty()) host = "localhost";
+        if (port == null || port.isEmpty()) port = "3307";
+        return "jdbc:mariadb://" + host + ":" + port + "/" + DB_NAME +
                 "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     }
 
@@ -53,7 +57,7 @@ public class CalculationService {
             stmt.executeUpdate(createTable);
 
             // Insert the result
-            String insert = "INSERT INTO calc_results (distance, consumption, price, totalFuel, totalCost, language) VALUES (?, ?, ?, ?, ?, ?)";
+            String insert = "INSERT INTO calculation_results (distance, consumption, price, totalFuel, totalCost, language) VALUES (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement ps = conn.prepareStatement(insert)) {
                 ps.setDouble(1, distance);
                 ps.setDouble(2, consumption);
