@@ -6,9 +6,10 @@ services:
     container_name: calculator-db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      # Make sure your 3307 port is available
+      MYSQL_ROOT_PASSWORD: Test123
+      MYSQL_DATABASE: fuel_calculator_localization
+      MYSQL_USER: test
+      MYSQL_PASSWORD: Test123
     ports:
       - "3307:3306"
     volumes:
