@@ -1,11 +1,14 @@
 package org.example;
+
 import java.sql.*;
 
 public class CalculationService {
 
     private static final String DB_NAME = "fuel_calculator_localization";
-    private static final String DB_USER = System.getenv("DB_USER");
-    private static final String DB_PASSWORD = System.getenv("DB_PASSWORD");
+    /*private static final String DB_USER = System.getenv("DB_USER");
+    private static final String DB_PASSWORD = System.getenv("DB_PASSWORD"); */
+    private static final String DB_USER = "test";
+    private static final String DB_PASSWORD = "Test123";
 
     // Load MariaDB driver
     static {
@@ -16,34 +19,15 @@ public class CalculationService {
         }
     }
 
-    private static String getDatabaseHost() {
-        String host = System.getenv("DB_HOST");
-        if (host == null || host.isEmpty()) host = "localhost"; // use Docker service name
-        return host;
-    }
+    public static void saveCalculation(double distance, double consumption, double price,
+                                       double totalFuel, double totalCost, String language) {
 
-    private static String getDatabaseUrl() {
-        String host = System.getenv("DB_HOST");
-        String port = System.getenv("DB_PORT");
-        if (host == null || host.isEmpty()) host = "localhost";
-        if (port == null || port.isEmpty()) port = "3307";
-        return "jdbc:mariadb://" + host + ":" + port + "/" + DB_NAME +
-                "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    }
-
-    private static Connection getConnection(String dbUrl) throws SQLException {
-        return DriverManager.getConnection(dbUrl, DB_USER, DB_PASSWORD);
-    }
-
-    public static void saveCalculation(double distance, double consumption, double price, double totalFuel, double totalCost, String language) {
-        String dbUrl = getDatabaseUrl();
-
-        try (Connection conn = getConnection(dbUrl);
+        try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement()) {
 
             // Create table if it doesn't exist
             String createTable = """
-                CREATE TABLE IF NOT EXISTS calculation_results (
+                CREATE TABLE IF NOT EXISTS calculation_records (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     distance DOUBLE NOT NULL,
                     consumption DOUBLE NOT NULL,
@@ -57,7 +41,12 @@ public class CalculationService {
             stmt.executeUpdate(createTable);
 
             // Insert the result
-            String insert = "INSERT INTO calculation_results (distance, consumption, price, totalFuel, totalCost, language) VALUES (?, ?, ?, ?, ?, ?)";
+            String insert = """
+                INSERT INTO calculation_records
+                (distance, consumption, price, total_fuel, total_cost, language)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """;
+
             try (PreparedStatement ps = conn.prepareStatement(insert)) {
                 ps.setDouble(1, distance);
                 ps.setDouble(2, consumption);
@@ -68,11 +57,10 @@ public class CalculationService {
                 ps.executeUpdate();
             }
 
-            System.out.println("Result saved: dist " + distance + ", consumption + " + consumption + ", price " + price +
-                    ", totalFuel " + totalFuel + ", totalCost" + totalCost + ", lang " + language);
+            System.out.println("Saved: dist=" + distance + " fuel=" + totalFuel + " cost=" + totalCost + " lang=" + language);
 
         } catch (SQLException e) {
-            System.err.println("Failed to save result to DB: " + dbUrl);
+            System.err.println("Failed to save result to DB");
             e.printStackTrace();
         }
     }

@@ -20,6 +20,7 @@ services:
     # then you can change the image in the following statement
     image: irakump/otp-week2-localization:latest
     container_name: fuel-calculator-app
+    restart: on-failure
     depends_on:
       - db
     environment:
