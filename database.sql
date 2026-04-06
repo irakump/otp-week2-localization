@@ -35,7 +35,6 @@ INSERT INTO localization_strings (`key`, value, language) VALUES
 -- Farsi
 INSERT INTO localization_strings (`key`, value, language) VALUES
     ('title', 'ماشین‌حساب سوخت و هزینه سفر', 'fa'),
-    ('title', 'ماشین‌حساب سوخت و هزینه سفر', 'fa'),
     ('distance.label', 'مسافت (km)', 'fa'),
     ('consumption.label', 'مصرف سوخت (L/100 km)', 'fa'),
     ('price.label', 'قیمت سوخت (به ازای هر لیتر)', 'fa'),
