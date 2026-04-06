@@ -30,12 +30,12 @@ All UI text is loaded dynamically from a MariaDB database.
 The database is created automatically by Docker using `database.sql`.
 
 ### Database details
-Database: fuel_calculator_localization
-User: test
-Password: Test123
-Port: 3306
-Host inside Docker: db
-Host on local machine: localhost
+**Database**: fuel_calculator_localization  
+**User**: test  
+**Password**: Test123  
+**Port**: 3306  
+**Host inside Docker**: db  
+**Host on local machine**: localhost  
 
 ### 4. Accessing the database
 
