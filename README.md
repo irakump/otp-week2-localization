@@ -72,7 +72,7 @@ Reset database completely:
 
 ---
 
-### 7. Sample Data
+### 6. Sample Data
 The database.sql file includes sample localization strings for:
 
 - English
