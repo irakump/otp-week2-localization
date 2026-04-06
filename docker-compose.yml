@@ -24,8 +24,7 @@ services:
     container_name: fuel-calculator-app
     restart: on-failure
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     environment:
       DB_HOST: db
       DB_PORT: 3306
