@@ -1,4 +1,4 @@
-# Fuel Calculator with Localization (JavaFX + MariaDB + Docker)
+# Fuel Calculator with Localization (JavaFX, MariaDB & Docker)
 
 This project is a JavaFX application that calculates fuel consumption and trip cost.  
 It supports four languages: English (EN), French (FR), Japanese (JP), and Farsi (IR).  
