@@ -17,7 +17,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/irakump/otp-week2-localization.git'
+                git branch: 'database', url: 'https://github.com/irakump/otp-week2-localization.git'
             }
         }
 
