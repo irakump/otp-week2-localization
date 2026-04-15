@@ -6,6 +6,11 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
+    private DatabaseConnection() {
+
+    }
+
+    public static boolean TEST_MODE = false;
     private static final String HOST = System.getenv().getOrDefault("DB_HOST", "localhost");
     private static final String PORT = System.getenv().getOrDefault("DB_PORT", "3306");
     private static final String DB_NAME = "fuel_calculator_localization";
@@ -16,6 +21,10 @@ public class DatabaseConnection {
     private static final String PASSWORD = System.getenv().getOrDefault("DB_PASSWORD", "Test123");
 
     public static Connection getConnection() throws SQLException {
+        if (TEST_MODE) {
+            throw new SQLException("Test mode - DB disabled");
+        }
+
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }

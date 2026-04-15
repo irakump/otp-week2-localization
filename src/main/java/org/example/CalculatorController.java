@@ -23,7 +23,10 @@ public class CalculatorController {
     @FXML private TextField txtConsumption;
     @FXML private TextField txtPrice;
     @FXML private Button btnCalculate;
-    @FXML private Button btnEN, btnFR, btnJP, btnIR;
+    @FXML private Button btnEN;
+    @FXML private Button btnFR;
+    @FXML private Button btnJP;
+    @FXML private Button btnIR;
     @FXML private Label lblResult;
     @FXML private Label lblCost;
 

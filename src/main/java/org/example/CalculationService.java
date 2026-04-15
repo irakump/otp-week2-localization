@@ -4,11 +4,9 @@ import java.sql.*;
 
 public class CalculationService {
 
-    private static final String DB_NAME = "fuel_calculator_localization";
-    /*private static final String DB_USER = System.getenv("DB_USER");
-    private static final String DB_PASSWORD = System.getenv("DB_PASSWORD"); */
-    private static final String DB_USER = "test";
-    private static final String DB_PASSWORD = "Test123";
+    private CalculationService() {
+
+    }
 
     // Load MariaDB driver
     static {
@@ -21,6 +19,11 @@ public class CalculationService {
 
     public static void saveCalculation(double distance, double consumption, double price,
                                        double totalFuel, double totalCost, String language) {
+
+        if (DatabaseConnection.TEST_MODE) {
+            System.out.println("TEST MODE: skipping DB save");
+            return;
+        }
 
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement()) {

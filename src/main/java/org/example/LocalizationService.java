@@ -5,6 +5,10 @@ import java.util.*;
 
 public class LocalizationService {
 
+    private LocalizationService() {
+
+    }
+
     public static Map<String, String> loadStrings(Locale locale) {
         Map<String, String> strings = new HashMap<>();
         String lang = locale.getLanguage();
@@ -59,7 +63,7 @@ public class LocalizationService {
 
     }
 
-    public static ArrayList<String> getAllKeys(Locale locale) {
+    public static List<String> getAllKeys(Locale locale) {
         ArrayList<String> keys = new ArrayList<>();
         String lang = locale.getLanguage();
 

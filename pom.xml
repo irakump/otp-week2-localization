@@ -12,6 +12,11 @@
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Sonar Coverage Path -->
+    <sonar.coverage.jacoco.xmlReportPaths>
+        target/site/jacoco/jacoco.xml
+    </sonar.coverage.jacoco.xmlReportPaths>
 </properties>
 
 <dependencies>
@@ -83,15 +88,23 @@
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>0.8.12</version>
+            <configuration>
+                <excludes>
+                    <exclude>org/example/CalculatorApp.class</exclude>
+                    <exclude>org/example/CalculatorController.class</exclude>
+                    <exclude>org/example/LocalizationService.class</exclude>
+                </excludes>
+            </configuration>
             <executions>
                 <execution>
+                    <id>prepare-agent</id>
                     <goals>
                         <goal>prepare-agent</goal>
                     </goals>
                 </execution>
                 <execution>
                     <id>report</id>
-                    <phase>prepare-package</phase>
+                    <phase>verify</phase>
                     <goals>
                         <goal>report</goal>
                     </goals>
