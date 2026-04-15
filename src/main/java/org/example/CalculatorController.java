@@ -14,6 +14,9 @@ import java.util.Map;
 
 public class CalculatorController {
 
+    private final CalculationService calculationService =
+            new CalculationService(new JdbcCalculationRepository());
+
     @FXML private VBox rootVBox;
     @FXML private Label lblTitle;
     @FXML private Label lblDistance;
@@ -91,7 +94,7 @@ public class CalculatorController {
             lblCost.setText(costResult);
 
             // Save results
-            CalculationService.saveCalculation(distance, consumption, price, totalFuel, totalCost, currentLocale.getLanguage());
+            calculationService.saveCalculation(distance, consumption, price, totalFuel, totalCost, currentLocale.getLanguage());
 
         } catch (NumberFormatException ex) {
             lblResult.setText(localizedStrings.getOrDefault("invalid.input", "Invalid input"));
