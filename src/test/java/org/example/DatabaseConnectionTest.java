@@ -12,25 +12,23 @@ class DatabaseConnectionTest {
 
     @BeforeEach
     void setup() {
-        DatabaseConnection.TEST_MODE = true;
+        DatabaseConnection.TESTMODE = true;
     }
 
     @AfterEach
     void tearDown() {
-        DatabaseConnection.TEST_MODE = true; // varmistetaan että jää test modeen
+        DatabaseConnection.TESTMODE = true;
     }
 
     @Test
     void testGetConnection_testMode_throwsSQLException() {
-        assertThrows(SQLException.class, () ->
-                DatabaseConnection.getConnection()
+        assertThrows(SQLException.class, DatabaseConnection::getConnection
         );
     }
 
     @Test
     void testGetConnection_testMode_exceptionMessage() {
-        SQLException ex = assertThrows(SQLException.class, () ->
-                DatabaseConnection.getConnection()
+        SQLException ex = assertThrows(SQLException.class, DatabaseConnection::getConnection
         );
         assertNotNull(ex.getMessage());
         assertTrue(ex.getMessage().contains("Test mode"));
@@ -39,23 +37,23 @@ class DatabaseConnectionTest {
     @Test
     void testTestMode_defaultIsTrue() {
         // Varmistetaan että TEST_MODE on päällä setupin jälkeen
-        assertTrue(DatabaseConnection.TEST_MODE);
+        assertTrue(DatabaseConnection.TESTMODE);
     }
 
     @Test
     void testTestMode_canBeToggled() {
-        DatabaseConnection.TEST_MODE = true;
-        assertTrue(DatabaseConnection.TEST_MODE);
-        DatabaseConnection.TEST_MODE = false;
-        assertFalse(DatabaseConnection.TEST_MODE);
-        DatabaseConnection.TEST_MODE = true; // palautetaan
+        DatabaseConnection.TESTMODE = true;
+        assertTrue(DatabaseConnection.TESTMODE);
+        DatabaseConnection.TESTMODE = false;
+        assertFalse(DatabaseConnection.TESTMODE);
+        DatabaseConnection.TESTMODE = true; // palautetaan
     }
 
     @Test
     void testGetConnection_testMode_multipleCalls() {
-        // Varmistetaan että jokainen kutsu heittää poikkeuksen TEST_MODEssa
-        assertThrows(SQLException.class, () -> DatabaseConnection.getConnection());
-        assertThrows(SQLException.class, () -> DatabaseConnection.getConnection());
-        assertThrows(SQLException.class, () -> DatabaseConnection.getConnection());
+        // Varmistetaan että jokainen kutsu heittää poikkeuksen TESTMODEssa
+        assertThrows(SQLException.class, DatabaseConnection::getConnection);
+        assertThrows(SQLException.class, DatabaseConnection::getConnection);
+        assertThrows(SQLException.class, DatabaseConnection::getConnection);
     }
 }

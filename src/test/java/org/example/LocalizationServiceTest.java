@@ -13,10 +13,10 @@ class LocalizationServiceTest {
 
     @BeforeEach
     void setup() {
-        DatabaseConnection.TEST_MODE = true;
+        DatabaseConnection.TESTMODE = true;
     }
 
-    // --- loadStrings: DB heittää poikkeuksen TEST_MODEssa -> palautetaan tyhjä map ---
+    // loadStrings: DB heittää poikkeuksen TEST_MODEssa -> palautetaan tyhjä map
 
     @Test
     void testLoadStrings_english_returnsMap() {
