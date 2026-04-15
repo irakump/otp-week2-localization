@@ -11,7 +11,7 @@ class CalculatorControllerTest {
 
     @BeforeEach
     void setup() {
-        DatabaseConnection.TESTMODE = true;
+        DatabaseConnection.testmode = true;
         controller = new CalculatorController();
     }
 

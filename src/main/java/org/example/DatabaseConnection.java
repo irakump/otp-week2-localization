@@ -10,7 +10,7 @@ public class DatabaseConnection {
 
     }
 
-    public static boolean TESTMODE = false;
+    public static boolean testmode = false;
     private static final String HOST = System.getenv().getOrDefault("DB_HOST", "localhost");
     private static final String PORT = System.getenv().getOrDefault("DB_PORT", "3306");
     private static final String DB_NAME = "fuel_calculator_localization";
@@ -21,7 +21,7 @@ public class DatabaseConnection {
     private static final String PASSWORD = System.getenv().getOrDefault("DB_PASSWORD", "Test123");
 
     public static Connection getConnection() throws SQLException {
-        if (TESTMODE) {
+        if (testmode) {
             throw new SQLException("Test mode - DB disabled");
         }
 

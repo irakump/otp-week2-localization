@@ -9,7 +9,7 @@ class CalculationServiceTest {
 
     @BeforeEach
     void setup() {
-        DatabaseConnection.TESTMODE = true;
+        DatabaseConnection.testmode = true;
     }
 
     @Test

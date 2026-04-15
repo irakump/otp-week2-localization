@@ -12,12 +12,12 @@ class DatabaseConnectionTest {
 
     @BeforeEach
     void setup() {
-        DatabaseConnection.TESTMODE = true;
+        DatabaseConnection.testmode = true;
     }
 
     @AfterEach
     void tearDown() {
-        DatabaseConnection.TESTMODE = true;
+        DatabaseConnection.testmode = true;
     }
 
     @Test
@@ -37,16 +37,16 @@ class DatabaseConnectionTest {
     @Test
     void testTestMode_defaultIsTrue() {
         // Varmistetaan että TEST_MODE on päällä setupin jälkeen
-        assertTrue(DatabaseConnection.TESTMODE);
+        assertTrue(DatabaseConnection.testmode);
     }
 
     @Test
     void testTestMode_canBeToggled() {
-        DatabaseConnection.TESTMODE = true;
-        assertTrue(DatabaseConnection.TESTMODE);
-        DatabaseConnection.TESTMODE = false;
-        assertFalse(DatabaseConnection.TESTMODE);
-        DatabaseConnection.TESTMODE = true; // palautetaan
+        DatabaseConnection.testmode = true;
+        assertTrue(DatabaseConnection.testmode);
+        DatabaseConnection.testmode = false;
+        assertFalse(DatabaseConnection.testmode);
+        DatabaseConnection.testmode = true; // palautetaan
     }
 
     @Test

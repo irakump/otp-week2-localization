@@ -13,7 +13,7 @@ class LocalizationServiceTest {
 
     @BeforeEach
     void setup() {
-        DatabaseConnection.TESTMODE = true;
+        DatabaseConnection.testmode = true;
     }
 
     // loadStrings: DB heittää poikkeuksen TEST_MODEssa -> palautetaan tyhjä map
