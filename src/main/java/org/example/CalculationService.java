@@ -20,7 +20,7 @@ public class CalculationService {
     public static void saveCalculation(double distance, double consumption, double price,
                                        double totalFuel, double totalCost, String language) {
 
-        if (DatabaseConnection.TEST_MODE) {
+        if (DatabaseConnection.testmode) {
             System.out.println("TEST MODE: skipping DB save");
             return;
         }
