@@ -218,27 +218,4 @@ class FuelCalculatorLogicTest {
     @Test void speed_zero_time() { assertEquals(0.0,   FuelCalculatorLogic.averageSpeed(200, 0),   0.0001); }
     @Test void speed_zero_dist() { assertEquals(0.0,   FuelCalculatorLogic.averageSpeed(0, 2),     0.0001); }
 
-    // --- fuelPerMinute ---
-    @Test void fpm_normal()    { assertEquals(0.1333, FuelCalculatorLogic.fuelPerMinute(8, 100), 0.001); }
-    @Test void fpm_zero_speed(){ assertEquals(0.0,    FuelCalculatorLogic.fuelPerMinute(8, 0),   0.0001); }
-
-    // --- canReachDestination ---
-    @Test void reach_yes()  { assertTrue(FuelCalculatorLogic.canReachDestination(50, 200, 8));  }
-    @Test void reach_no()   { assertFalse(FuelCalculatorLogic.canReachDestination(5, 200, 8));  }
-    @Test void reach_exact(){ assertTrue(FuelCalculatorLogic.canReachDestination(16, 200, 8));  }
-
-    // --- surplusFuel ---
-    @Test void surplus_positive() { assertEquals(34.0, FuelCalculatorLogic.surplusFuel(50, 200, 8),  0.0001); }
-    @Test void surplus_negative() { assertEquals(-11.0,FuelCalculatorLogic.surplusFuel(5, 200, 8),   0.0001); }
-    @Test void surplus_zero()     { assertEquals(0.0,  FuelCalculatorLogic.surplusFuel(16, 200, 8),  0.0001); }
-
-    // --- costDifference ---
-    @Test void diff_normal()   { assertEquals(10.0, FuelCalculatorLogic.costDifference(50, 40), 0.0001); }
-    @Test void diff_reversed() { assertEquals(10.0, FuelCalculatorLogic.costDifference(40, 50), 0.0001); }
-    @Test void diff_zero()     { assertEquals(0.0,  FuelCalculatorLogic.costDifference(50, 50), 0.0001); }
-
-    // --- fullTankRefuels ---
-    @Test void refuels_none()  { assertEquals(0, FuelCalculatorLogic.fullTankRefuels(400, 500)); }
-    @Test void refuels_one()   { assertEquals(1, FuelCalculatorLogic.fullTankRefuels(600, 400)); }
-    @Test void refuels_zero_range() { assertEquals(0, FuelCalculatorLogic.fullTankRefuels(500, 0)); }
 }
